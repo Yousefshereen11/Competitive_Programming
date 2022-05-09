@@ -1,16 +1,15 @@
-struct dsu {
-	static const int N = 107;
-	int par[N], sz[N];
- 
-	void init() {
-		iota(par, par + N, 0);
-		fill(sz, sz + N, 1);
-	}
- 
-	int find(int u){
+struct DSU {
+    vector < int > par, sz;
+
+    DSU(int n) {
+        par = sz = vector < int > (n + 1, 1);
+        for(int i = 1; i <= n; ++i)
+            par[i] = i;
+    }
+    int find(int u){
         return par[u] = (u == par[u] ? u : find(par[u]));
     }
-    void merg(int u, int v){
+    void merge(int u, int v){
         u = find(u), v = find(v);
         if(u == v)
             return;
@@ -19,9 +18,7 @@ struct dsu {
         par[u] = v;
         sz[v] += sz[u];
     }
- 
-	bool conectd(int u, int v) {
-		return find(u) == find(v);
-	}
- 
+    bool connected(int u, int v) {
+        return find(u) == find(v);
+    }
 };
